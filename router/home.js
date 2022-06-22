@@ -14,4 +14,22 @@
 //     })
 //     ctx.body=data
 //   })
+exports.Posts=function(ctx)
+	{
+    return new Promise((resolve,reject)=>{
+        try{
+            let str='';
+            ctx.req.on('data',function(chunk){
+                str+=chunk;
+            })
+    
+            ctx.req.on('end',function(){
+                resolve(str);
+            })
+        }catch(err)
+        {
+            reject(err);
+        }
+    })
+}
 // module.exports=home

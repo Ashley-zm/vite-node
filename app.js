@@ -1,15 +1,25 @@
-const koa = require('koa');
+const koa = require("koa");
 const app = new koa();
-const router = require('./router') //路由配置文件  
+//  koa-bodyparser 中间件不支持 form-data 类型。
+const bodyParser=require('koa-bodyparser');
+// const bodyParser = require("koa-body")({
+//   multipart: true, // 允许上传多个文件
+// });
+app.use(bodyParser());
+
+const router = require("./router"); //路由配置文件
+
+//数据库连接
+const query = require("./utils/db");
 
 // 读取静态文件
-const static = require('koa-static') //静态资源中间件
-const path = require('path') //路径管理中间件
-app.use(static(path.join(__dirname + '/assets')));
+const static = require("koa-static"); //静态资源中间件
+const path = require("path"); //路径管理中间件
+app.use(static(path.join(__dirname + "/assets")));
 
 // 后端跨域 处理
-const cors = require('koa2-cors');
-app.use(cors())
+const cors = require("koa2-cors");
+app.use(cors());
 //或者
 // app.use(
 //     cors({
@@ -29,14 +39,13 @@ app.use(cors())
 //     })
 // );
 
-
 // use 调用router的中间件
 // router.routes() ： 启动路由
 // router.allowedMethods() ：允许任何请求（get，post，put）
-app.use(router.routes(), router.allowedMethods())
+app.use(router.routes(), router.allowedMethods());
 // 重定向，当访问根路径的时候自动跳转到主页
-router.redirect('/', '/test');
+router.redirect("/", "/test");
 // router.redirect('/','/home');
 app.listen(5001, () => {
-    console.log("(点击访问)server is running at http://localhost:5001")
-})
+  console.log("(点击访问)server is running at http://localhost:5001");
+});

@@ -2,7 +2,7 @@ const Router=require('koa-router');
 const router=new Router();
 
 // 注册路由
-const sql=require('./sql')
+const sql=require('./user')
 router.use(sql.routes(),sql.allowedMethods())
 // const list=require('./list')
 // const home=require('./home')

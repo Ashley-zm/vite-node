@@ -1,14 +1,13 @@
+// 数据连接配置
 const mysql = require('mysql')
 
 const pool = mysql.createPool({
     host: 'localhost',
     port: 3306,
-    database: 'koa_map',
-    // database:'koa_test',
+    database: 'vite_node',
     user: 'root',
     password: 'password'
 })
-
 function query(sql) {
     return new Promise((resolve, reject) => {
         pool.getConnection(function (err, connection) {
@@ -30,17 +29,5 @@ function query(sql) {
             }
         });
     })
-
 }
-// function query(sql,callback){
-//     pool.getConnection(function(err,connection){
-//         connection.query(sql,function(err,row){
-//             callback(err,row)
-//             connection.release()
-//             // pool.releaseConnection(connection)
-//         })
-
-//     })
-
-// }
 exports.query = query;
